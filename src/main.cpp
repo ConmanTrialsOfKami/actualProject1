@@ -113,6 +113,50 @@ Node* rebalance(Node* n) {
     }
 }
 
+// Now the insert node function by ID, with the rebalance function we defined. If we
+// get a duplicate we dont insert.
+
+Node* insertAVL(Node* n, string& name, int id, bool& dupe) {
+    if (n == nullptr) {
+        dupe = true;
+        return new Node(name, id);
+    }
+
+    else {
+        if (id > n->id) {
+            n->left = insertAVL(n->left, name, id, dupe); // by sorting we know to insert id if id > n->id
+        }
+        else if (id < n->id) {
+            n->right = insertAVL(n->right, name, id, dupe); // same for this, but other way around
+        }
+        else {
+            dupe = false;
+            return n;
+        }
+
+        return rebalance(n); // using the rebalance function to rebalance back up
+    }
+
+
+}
+
+// function to find smallest node to find inorder successor
+
+Node* minimum(Node* n) {
+    while (n != nullptr && n->left != nullptr) {
+        n = n->left;
+    }
+    return n;
+}
+
+// Function that deletes nodes by ID, also uses minimum to find inorder successor
+Node* deleteNode(Node* n, int id, bool&) {
+    if (n == nullptr) {
+        return nullptr;
+    }
+}
+
+
 int main(){
 
 }

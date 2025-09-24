@@ -107,7 +107,7 @@ int main(){
         else if (line.rfind("search ", 0) == 0) {
 
             // check if line contains quotation marks
-            if (line.find('"') != -1) {
+            if (line.find('"') != string::npos) {
                 string name;
 
                 // checks if name can be extracted

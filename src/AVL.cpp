@@ -365,10 +365,10 @@ bool extractQuote(const string& line, string& out) {
 // prints each name separated by a comma
 void printNamesByComma(const vector<string>& names) {
     // goes thru every name
-    for (int i = 0; i < names.size(); i++) {
+    for (int i = 0; i < (int) names.size(); i++) { // change size_t size() to int
         cout << names[i];
         // checks if its the last element, if it is it doesnt print a comma and ends for loop
-        if (i + 1 >= names.size()) {
+        if (i + 1 >= (int) names.size()) { //change names.size() to int since its size_t
             break;
         }
         cout << ", ";
@@ -380,10 +380,10 @@ void printNamesByComma(const vector<string>& names) {
 
 // exact same thing as previous function but for IDS
 void printIDByComma(const vector<int>& ids) {
-    for (int i = 0; i < ids.size(); i++) {
+    for (int i = 0; i < (int) ids.size(); i++) { // change size_t size() to int
         cout << ids[i];
 
-        if (i + 1 >= ids.size()) {
+        if (i + 1 >= (int) ids.size()) { //change size_t to int for ids.size()
             break;
         }
         cout << ", ";

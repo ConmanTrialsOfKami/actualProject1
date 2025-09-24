@@ -26,6 +26,8 @@ Node* insertAVL(Node* n, const string& name, int id, bool& success);
 
 Node* deleteNode(Node* n, int id, bool& success);
 
+Node* removeInOrder(Node* n, int k, bool& success);
+
 bool searchId(Node* n, int id, string& oName);
 
 void inOrderNames(Node* n, vector<string>& out);
@@ -48,4 +50,5 @@ bool extractQuote(const string& line, string& out);
 
 void printNamesByComma(const vector<string>& names);
 
+void printIDByComma(const vector<int>& ids);
 #endif //AVL_H

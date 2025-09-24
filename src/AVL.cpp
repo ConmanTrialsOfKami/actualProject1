@@ -196,6 +196,7 @@ Node* deleteNode(Node* n, int id, bool& success) {
     return n;
 }
 
+
 // search if ID is in tree
 bool searchId(Node* n, int id, string& oName) {
     // we go through the BST till we find it, if we go thru entire thing and don't find it it returns false
@@ -274,6 +275,31 @@ void inOrderIDS(Node* n, vector<int>& ids) {
         inOrderIDS(n->right, ids);
     }
 }
+
+// remove nodes in inorder traversal
+
+Node* removeInOrder(Node* n, int k, bool& success) {
+  vector<int> ids;
+  inOrderIDS(n, ids); //get IDS in order using previous function we just made.
+
+  // if k is out of bounds, the operation is unsuccessful.
+  if (k < 0 || k >= (int)ids.size()) {
+    success = false;
+    return n;
+  }
+
+  // we do this to make sure we actually get a value from ids array
+  int targetId = ids[k];
+
+  // use delete by ID to remove it
+  n = deleteNode(n, targetId, success);
+
+  return n;
+
+
+}
+
+
 // to fulfill the the requirement of printing the number of levels in AVL tree
 int lvlCount(Node* n) {
     return heightShower(n);
@@ -352,3 +378,16 @@ void printNamesByComma(const vector<string>& names) {
     cout << "\n";
 }
 
+// exact same thing as previous function but for IDS
+void printIDByComma(const vector<int>& ids) {
+    for (int i = 0; i < ids.size(); i++) {
+        cout << ids[i];
+
+        if (i + 1 >= ids.size()) {
+            break;
+        }
+        cout << ", ";
+    }
+
+    cout << "\n";
+}

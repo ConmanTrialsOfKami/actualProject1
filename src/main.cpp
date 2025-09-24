@@ -90,10 +90,77 @@ int main(){
             int k = stoi(kStr); // convert to int
 
             bool success = false;
-            n = remove
+            n = removeInOrder(n, k, success); //remove in order traversal
 
+
+            // same thing we've done for insert, remove, etc. print if successful, else print unsuccessful if unsuccessful
+            if (success == true) {
+                cout << "successful\n";
+            }
+            else {
+                cout << "unsuccessful\n";
+            }
 
         }
+
+        // now we move on to search
+        else if (line.rfind("search ", 0) == 0) {
+
+            // check if line contains quotation marks
+            if (line.find('"') != -1) {
+                string name;
+
+                // checks if name can be extracted
+                if (extractQuote(line, name) == false) {
+
+                    // no valid thing is found, so we print unsuccessful
+                    cout << "unsuccessful\n";
+                    continue;
+                }
+
+                // collect all IDS, using preorder traversal
+
+                vector<int> ids;
+                preorderCollectID(n, name, ids);
+
+                // If no ids found, print unsucessful, else print IDS
+
+                if (ids.empty()){
+                    cout << "unsuccessful\n";
+                }
+
+                else {
+                    printIDByComma(ids);
+                }
+
+            }
+
+            // this else is for if there are no quotes in the statement
+            else {
+                //grabs the string after "search "
+                string idStr = line.substr(7);
+
+                // makes sure ID is good
+                if (eightDigitId(idStr) == false) {
+                    cout << "unsuccessful\n";
+                    continue;
+                }
+
+                // makes id int
+                int id = stoi(idStr);
+                string foundName;
+
+                // attempts to find ID
+                if (searchId(n, id, foundName) == true) {
+                    cout << foundName << "\n"; // if it finds the name, print
+                }
+                else {
+                    cout << "unsuccessful\n";
+                }
+            }
+        }
+
+
     }
 
 }

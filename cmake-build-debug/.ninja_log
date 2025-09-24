@@ -1,0 +1,5 @@
+# ninja log v6
+9	473	7804491573140550	CMakeFiles/Main.dir/src/main.cpp.obj	e4ec49777856ffac
+10	2293	7804493339629778	build.ninja	870aeb343a672f34
+5	433	7804494481461840	CMakeFiles/Main.dir/src/AVL.cpp.obj	cd499a2002bd15ba
+433	550	7804494485748740	Main.exe	d18d72b044988d9e

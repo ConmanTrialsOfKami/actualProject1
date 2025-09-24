@@ -2,7 +2,7 @@
 #include <iostream>
 
 // uncomment and replace the following with your own headers
-// #include "AVL.h"
+#include "AVL.h"
 
 using namespace std;
 
@@ -50,4 +50,34 @@ TEST_CASE("Example BST Insert", "[flag]"){
 		REQUIRE(expectedOutput.size() == actualOutput.size());
 		REQUIRE(actualOutput == expectedOutput);
 	*/
+}
+
+// 1st test case, 5 incorrect commands
+TEST_CASE("5 incorrect commands") {
+	Node* n = nullptr;
+	bool success = false;
+
+	// First command, invalid name, digits on it
+	n = insertAVL(n, "A11y", 32345259, success);
+	REQUIRE(success == false);
+
+	// Invalid ID, not having 8 digits
+	n = insertAVL(n, "Alice", 123, success);
+	REQUIRE(success == false);
+
+	// empty Name
+	n = insertAVL(n, "", 12345678, success);
+	REQUIRE(success == false);
+
+	// search for nonname
+	vector<int> ids;
+	preorderCollectID(n, "Charlie", ids);
+	REQUIRE(ids.empty() == true);
+
+	// Duplicate ID
+	n = insertAVL(n, "Alice", 12345678, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "Dupe", 12345678, success);
+	REQUIRE(success == false);
+
 }

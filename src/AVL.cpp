@@ -5,25 +5,17 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include "AVL.h"
 
 using namespace std;
 // Node of BST/AVL
-struct Node {
-    string name; //student name
-    int id; //UF id
-    int height; //height of AVL
-    Node* left;
-    Node* right;
-
-    Node(string& n, int i) {
-        name = n;
-        id = i;
-        height = 1;
-        left = nullptr;
-        right = nullptr;
-
-    }
-};
+Node::Node(const string& n, int i) {
+    name = n;
+    id = i;
+    height = 1;
+    left = nullptr;
+    right = nullptr;
+}
 
 // gets height
 int heightShower(Node* n) {
@@ -122,7 +114,7 @@ Node* rebalance(Node* n) {
 // Now the insert node function by ID, with the rebalance function we defined. If we
 // If we get a duplicate we dont insert.
 
-Node* insertAVL(Node* n, string& name, int id, bool& success) {
+Node* insertAVL(Node* n, const string& name, int id, bool& success) {
     if (n == nullptr) {
         success = true;
         return new Node(name, id);
@@ -222,7 +214,7 @@ bool searchId(Node* n, int id, string& oName) {
     return false;
 }
 // gets ids in preorder, to later print
-void preorderCollectID(Node* n, string& name, vector<int>& ids) {
+void preorderCollectID(Node* n, const string& name, vector<int>& ids) {
     // if empty return
     if (n == nullptr) {
         return;
@@ -288,7 +280,7 @@ int lvlCount(Node* n) {
 }
 
 // checks if ID is 8 digits and is valid.
-bool eightDigitId(string& str) {
+bool eightDigitId(const string& str) {
     // checks if its 8 digits, returns false if it isnt
     if (str.size() != 8) {
         return false;
@@ -303,7 +295,7 @@ bool eightDigitId(string& str) {
     return true;
 }
 // checks to make sure a name is valid, ie, has only letters and spaces
-bool validName(string& str) {
+bool validName(const string& str) {
     // if the string is empty return false
     if (str.empty() == true) {
         return false;
@@ -318,7 +310,7 @@ bool validName(string& str) {
     return true;
 }
 
-bool extractQuote(string& line, string& out) {
+bool extractQuote(const string& line, string& out) {
     bool inside = false; // boolean for if we are inside quotes
     out = "";
 
@@ -345,7 +337,7 @@ bool extractQuote(string& line, string& out) {
 }
 
 // prints each name separated by a comma
-void printNamesByComma(vector<string>& names) {
+void printNamesByComma(const vector<string>& names) {
     // goes thru every name
     for (int i = 0; i < names.size(); i++) {
         cout << names[i];

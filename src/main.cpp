@@ -159,8 +159,34 @@ int main(){
                 }
             }
         }
+        // print names in inorder traversal
+        else if (line == "printInorder") {
+            vector<string> names;
+            inOrderNames(n, names);
+            printNamesByComma(names);
+        }
+        // print names in preorder traversal
+        else if (line == "printPreorder") {
+            vector<string> names;
+            preOrderNames(n, names);
+            printNamesByComma(names);
+        }
+        //print names in postorder
+        else if (line == "printPostorder") {
+            vector<string> names;
+            postOrderNames(n, names);
+            printNamesByComma(names);
+        }
+        // print level count
+        else if (line == "printLevelCount") {
+            cout << lvlCount(n) << "\n";
+        }
 
+        else {
+            cout << "unsuccessful\n";
+        }
 
     }
+    return 0;
 
 }

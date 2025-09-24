@@ -81,3 +81,21 @@ TEST_CASE("5 incorrect commands") {
 	REQUIRE(success == false);
 
 }
+
+// Test case 2, 3 edge cases
+TEST_CASE("3 edge cases") {
+	Node* n = nullptr;
+	bool success = false;
+
+	//removing node that doesnt exist
+	n = deleteNode(n, 12345678, success);
+	REQUIRE(success == false);
+
+	// remove from empty tree
+	n = removeInOrder(n, 0, success);
+	REQUIRE(success == false);
+
+	// search empty tree
+	string o;
+	REQUIRE(searchId(n, 12345678, o) == false);
+}

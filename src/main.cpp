@@ -6,5 +6,94 @@
 using namespace std;
 
 int main(){
+    int numCommands;
+    cin >> numCommands; //reads the amount of commands.
+    cin.ignore(); //skip the newline
+
+    Node* n = nullptr;
+    for (int i = 0; i < numCommands; i++) {
+        string line;
+        getline(cin, line); //read one command
+
+        // check if insert
+
+        if (line.rfind("insert ", 0) == 0) {
+            string name;
+            // if no name is extracted, print unsuccessful
+            if (extractQuote(line, name) == false || validName(name) == false) {
+                cout << "unsuccessful\n";
+                continue;
+            }
+            // find the last space before the ID
+            int pos = (int)line.find_last_of(' ');
+
+            if (pos == -1) { //if it isnt found, print unsuccessful
+                cout << "unsuccessful\n";
+                continue;
+            }
+
+
+            // id if previous if statement isnt triggered
+            string idStr = line.substr(pos + 1);
+
+            // if the id isn't 8 digits and valid, prints unsuccessful
+            if (eightDigitId(idStr) == false) {
+                cout << "unsuccessful\n";
+                continue;
+            }
+
+            int id = stoi(idStr);
+            bool success = false; //tracks if insertion worked
+
+            // inserts node
+            n = insertAVL(n, name, id, success);
+
+            // if bool variable turns true, we print successful, else unsuccessful
+            if (success == true) {
+                cout << "successful\n";
+            }
+            else {
+                cout << "unsuccessful\n";
+            }
+
+        }
+
+        // now after insert we check remove
+        else if (line.rfind("remove ", 0) == 0) {
+            string idStr = line.substr(7);
+
+            // same as before, if it isnt 8 digit valid id, prints unsuccessful
+            if (eightDigitId(idStr) == false) {
+                cout << "unsuccessful\n";
+                continue;
+            }
+
+            // get id to int
+            int id = stoi(idStr);
+            bool success = false;
+            // delete node
+            n = deleteNode(n, id, success);
+
+            // print according to whether bool variable indicates success or not
+            if (success == true) {
+                cout << "successful\n";
+            }
+            else {
+                cout << "unsuccessful\n";
+            }
+        }
+
+
+        // now after remove, we tackle removeInorder, removing the kth node in inorder
+        else if (line.rfind("removeInorder ", 0) == 0) {
+            string kStr = line.substr(13);
+            int k = stoi(kStr); // convert to int
+
+            bool success = false;
+            n = remove
+
+
+        }
+    }
 
 }

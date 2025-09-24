@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 // Node of BST/AVL
 struct Node {
@@ -114,23 +114,24 @@ Node* rebalance(Node* n) {
 }
 
 // Now the insert node function by ID, with the rebalance function we defined. If we
-// get a duplicate we dont insert.
+// If we get a duplicate we dont insert.
 
-Node* insertAVL(Node* n, string& name, int id, bool& dupe) {
+Node* insertAVL(Node* n, string& name, int id, bool& success) {
     if (n == nullptr) {
-        dupe = true;
+        success = true;
         return new Node(name, id);
     }
 
     else {
-        if (id > n->id) {
-            n->left = insertAVL(n->left, name, id, dupe); // by sorting we know to insert id if id > n->id
+        if (id < n->id) {
+            n->left = insertAVL(n->left, name, id, success); // by sorting we know to insert id on left if id < n->id
         }
-        else if (id < n->id) {
-            n->right = insertAVL(n->right, name, id, dupe); // same for this, but other way around
+        else if (id > n->id) {
+            n->right = insertAVL(n->right, name, id, success); // same for this, but other way around
         }
         else {
-            dupe = false;
+            // if there's a dupe we don't insert
+            success = false;
             return n;
         }
 
@@ -150,11 +151,178 @@ Node* minimum(Node* n) {
 }
 
 // Function that deletes nodes by ID, also uses minimum to find inorder successor
-Node* deleteNode(Node* n, int id, bool&) {
+Node* deleteNode(Node* n, int id, bool& success) {
     if (n == nullptr) {
         return nullptr;
     }
+    // if id is smaller, go left and delete that node
+    if (id < n->id) {
+        n->left = deleteNode(n->left, id, success);
+    }
+    // same thing but for right node
+    else if (id > n->id) {
+        n->right = deleteNode(n->right, id, success);
+    }
+
+    else {
+        // we find the node, id's are equal
+        success = true;
+        // if it has no children we just delete
+        if (n->left == nullptr && n->right == nullptr) {
+            delete n;
+            return nullptr;
+        }
+
+        // if it has a right child, delete the node and return the right child
+        else if (n->left == nullptr) {
+            Node* right = n->right;
+            delete n;
+            return right;
+        }
+        // same thing for having a left child
+        else if (n->right == nullptr) {
+            Node* left = n->left;
+            delete n;
+            return left;
+        }
+        // If it has two kids, we replace the data with the inorder successor, then delete the successor node from the right
+        else {
+            Node* s = minimum(n->right);
+            n->id = s->id;
+            n->name = s->name;
+            n->right = deleteNode(n->right, s->id, success);
+        }
+    }
+    // now we simply update height
+    heightUpdater(n);
+    return n;
 }
+
+// search if ID is in tree
+bool searchId(Node* n, int id, string& oName) {
+    // we go through the BST till we find it, if we go thru entire thing and don't find it it returns false
+    while (n != nullptr) { //smaller id's are on the left, bigger ones on the right, and we go thru the entire tree till id = n->id, and if we never find it, it exits the while loop as n == nullptr
+        if (id < n->id) {
+            n = n->left;
+        }
+        else if (id > n->id) {
+            n = n->right;
+        }
+        else {
+            oName = n->name;
+            return true;
+        }
+    }
+    return false;
+}
+// gets ids in preorder, to later print
+void preorderCollectID(Node* n, string& name, vector<int>& ids) {
+    // if empty return
+    if (n == nullptr) {
+        return;
+    }
+    // if node name is the same as string name, add node id to vector
+    if (n->name == name) {
+        ids.push_back(n->id);
+    }
+    // Continue for the children
+    preorderCollectID(n->left, name, ids);
+    preorderCollectID(n->right, name, ids);
+
+}
+// similar to previous function, but collects names inorder instead of preorder ids.
+void inOrderNames(Node* n, vector<int>& out) {
+    if (n == nullptr) {
+        return;
+    }
+    // goes to left node
+    inOrderNames(n->left, out);
+
+    // add name to vector
+    out.push_back(n->name);
+
+    // goes to right node
+    inOrderNames(n->right, out);
+}
+
+void preOrderNames(Node* n, vector<string>& out) {
+    if (n == nullptr) {
+        return;
+    }
+    // moves push_back to be first to be preorder instead of inorder
+    out.push_back(n->name);
+    preOrderNames(n->left, out);
+    preOrderNames(n->right, out);
+}
+
+// for getting postorder names, moving push_back as the last line in comparison to the previous functions
+void postOrderNames(Node* n, vector<string>& out) {
+    if (n == nullptr) {
+        return;
+    }
+    postOrderNames(n->left, out);
+    postOrderNames(n->right, out);
+    out.push_back(n->name);
+}
+
+// get IDS in order like we did for names, so same thing except we use n->id
+void inOrderIDS(Node* n, vector<int>& ids) {
+    if (n == nullptr) {
+        return;
+    }
+    else {
+        inOrderIDS(n->left, ids);
+        ids.push_back(n->id);
+        inOrderIDS(n->right, ids);
+    }
+}
+// to fulfill the the requirement of printing the number of levels in AVL tree
+int lvlCount(Node* n) {
+    return heightShower(n);
+}
+
+// checks if ID is 8 digits and is valid.
+bool eightDigitId(string& str) {
+    // checks if its 8 digits, returns false if it isnt
+    if (str.size() != 8) {
+        return false;
+    }
+    // goes thru every character, and if 1 isn't a number, it returns false
+    for (char c : str) {
+        if (isdigit(c) == false) {
+            return false;
+        }
+    }
+    // if every character is a number and the string is 8 digits, it returns true
+    return true;
+}
+// checks to make sure a name is valid, ie, has only letters and spaces
+bool validName(string& str) {
+    // if the string is empty return false
+    if (str.empty() == true) {
+        return false;
+    }
+    // checks for every character if it isnt between A-Z and a-z, and space
+    for (char c : str) {
+        if (isalpha(c) == false && c != ' ') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 int main(){

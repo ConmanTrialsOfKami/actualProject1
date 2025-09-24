@@ -32,6 +32,7 @@ add_executable(Main
 add_executable(Tests
         test/test.cpp
         src/AVL.cpp
+        test/catch/catch_amalgamated.cpp
         # your test file
         # add your own header files below - should be automatically added in CLion
         # example (can also separate with newlines):

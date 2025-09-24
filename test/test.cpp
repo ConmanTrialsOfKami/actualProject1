@@ -11,11 +11,11 @@ TEST_CASE("Example Test Name - Change me!", "[flag]"){
 	// instantiate any class members that you need to test here
 	int one = 1;
 
-	// anything that evaluates to false in a REQUIRE block will result in a failing test 
-	REQUIRE(one == 0); // fix me!
+	// anything that evaluates to false in a REQUIRE block will result in a failing test
+	REQUIRE(one == 1); // fix me!
 
 	// all REQUIRE blocks must evaluate to true for the whole test to pass
-	REQUIRE(false); // also fix me!
+	REQUIRE(true); // also fix me!
 }
 
 TEST_CASE("Test 2", "[flag]"){
@@ -54,27 +54,23 @@ TEST_CASE("Example BST Insert", "[flag]"){
 
 // 1st test case, 5 incorrect commands
 TEST_CASE("5 incorrect commands") {
-	Node* n = nullptr;
-	bool success = false;
 
 	// First command, invalid name, digits on it
-	n = insertAVL(n, "A11y", 32345259, success);
-	REQUIRE(success == false);
+	REQUIRE(validName("A11y") == false);
 
 	// Invalid ID, not having 8 digits
-	n = insertAVL(n, "Alice", 123, success);
-	REQUIRE(success == false);
+	REQUIRE(eightDigitId("1234") == false);
 
 	// empty Name
-	n = insertAVL(n, "", 12345678, success);
-	REQUIRE(success == false);
+	REQUIRE(validName("") == false);
 
-	// search for nonname
-	vector<int> ids;
-	preorderCollectID(n, "Charlie", ids);
-	REQUIRE(ids.empty() == true);
+	// name with symbol
+	REQUIRE(validName("Al!ice") == false);
 
-	// Duplicate ID
+	//duplicate ID
+	Node* n = nullptr;
+	bool success= false;
+
 	n = insertAVL(n, "Alice", 12345678, success);
 	REQUIRE(success == true);
 	n = insertAVL(n, "Dupe", 12345678, success);

@@ -95,3 +95,114 @@ TEST_CASE("3 edge cases") {
 	string o;
 	REQUIRE(searchId(n, 12345678, o) == false);
 }
+
+// Test case 3: rotations
+TEST_CASE ("Rotations"){
+	bool success = false;
+
+	// left rotation
+	{
+		Node* n = nullptr;
+		n = insertAVL(n, "A", 10, success);
+		n = insertAVL(n, "B", 20, success);
+		n = insertAVL(n, "C", 30, success);
+
+		REQUIRE(n != nullptr);
+		REQUIRE(n->id == 20);
+	}
+
+	// right rotation
+	{
+		Node* n = nullptr;
+		n = insertAVL(n, "C", 30, success);
+		n = insertAVL(n, "B", 20, success);
+		n = insertAVL(n, "A", 10, success);
+
+		REQUIRE(n != nullptr);
+		REQUIRE(n->id == 20);
+	}
+
+	// left right rotation
+	{
+		Node* n = nullptr;
+		n = insertAVL(n, "C", 30, success);
+		n = insertAVL(n, "A", 10, success);
+		n = insertAVL(n, "B", 20, success);
+
+		REQUIRE(n != nullptr);
+		REQUIRE(n->id == 20);
+	}
+
+	// right left rotation
+	{
+		Node* n = nullptr;
+		n = insertAVL(n, "A", 10, success);
+		n = insertAVL(n, "C", 30, success);
+		n = insertAVL(n, "B", 20, success);
+
+		REQUIRE(n != nullptr);
+		REQUIRE(n->id == 20);
+	}
+}
+
+// Test case 4: Deletion cases
+TEST_CASE("Deletions") {
+	Node* n = nullptr;
+	bool success = false;
+
+	n = insertAVL(n, "A", 20, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "B", 10, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "C", 30, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "D", 25, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "E", 5, success);
+	REQUIRE(success == true);
+
+	// leaf
+	n = deleteNode(n, 5, success);
+	REQUIRE(success == true);
+
+	// one child
+	n = deleteNode(n, 30, success);
+	REQUIRE(success == true);
+
+	// two children
+	n = insertAVL(n, "F", 22, success);
+	REQUIRE(success == true);
+	n = insertAVL(n, "G", 28, success);
+	REQUIRE(success == true);
+	n = deleteNode(n, 20, success);
+	REQUIRE(success == true);
+
+}
+
+// Testcase 5: 100 inserts, remove 10, checkinorder size 90
+
+TEST_CASE("100 inserts") {
+	Node* n = nullptr;
+	bool success = false;
+
+	// 100 inserts
+	for (int i = 1; i <= 100; i++) {
+		n = insertAVL(n, "N", i, success);
+		REQUIRE(success == true);
+	}
+
+	// remove 10 deterministic
+	int num[] = {3,7,10,15,21,34,55,68,89,100};
+	for (int i = 0; i < 10; i++) {
+		n = deleteNode(n, num[i], success);
+		REQUIRE(success == true);
+	}
+
+	// inorder should have 90 ids and be sorted
+	vector<int> ids;
+	inOrderIDS(n, ids);
+	REQUIRE((int)ids.size() == 90);
+	for (int i = 1; i < (int)ids.size(); i++) {
+		REQUIRE(ids[i-1] < ids[i]);
+	}
+}

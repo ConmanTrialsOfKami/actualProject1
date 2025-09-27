@@ -214,7 +214,7 @@ bool searchId(Node* n, int id, string& oName) {
     }
     return false;
 }
-// gets ids in preorder, to later print
+// gets ids in preorder, to later print. Basically search for student with name, and if name found, print ID
 void preorderCollectID(Node* n, const string& name, vector<int>& ids) {
     // if empty return
     if (n == nullptr) {

@@ -1,3 +1,4 @@
+// Ricardo Bezi, 95461037
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
 
@@ -39,21 +40,10 @@ TEST_CASE("Test 2", "[flag]"){
 
 // the provided test from the template is below.
 
-TEST_CASE("Example BST Insert", "[flag]"){
-	/*
-		MyAVLTree tree;   // Create a Tree object
-		tree.insert(3);
-		tree.insert(2);
-		tree.insert(1);
-		std::vector<int> actualOutput = tree.inorder();
-		std::vector<int> expectedOutput = {1, 2, 3};
-		REQUIRE(expectedOutput.size() == actualOutput.size());
-		REQUIRE(actualOutput == expectedOutput);
-	*/
-}
+
 
 // 1st test case, 5 incorrect commands
-TEST_CASE("5 incorrect commands") {
+TEST_CASE("Test1: 5 incorrect commands") {
 
 	// First command, invalid name, digits on it
 	REQUIRE(validName("A11y") == false);
@@ -79,7 +69,7 @@ TEST_CASE("5 incorrect commands") {
 }
 
 // Test case 2, 3 edge cases
-TEST_CASE("3 edge cases") {
+TEST_CASE("Test2: 3 edge cases") {
 	Node* n = nullptr;
 	bool success = false;
 
@@ -97,7 +87,7 @@ TEST_CASE("3 edge cases") {
 }
 
 // Test case 3: rotations
-TEST_CASE ("Rotations"){
+TEST_CASE ("Test3: Rotations"){
 	bool success = false;
 
 	// left rotation
@@ -146,7 +136,7 @@ TEST_CASE ("Rotations"){
 }
 
 // Test case 4: Deletion cases
-TEST_CASE("Deletions") {
+TEST_CASE("Test4: Deletions") {
 	Node* n = nullptr;
 	bool success = false;
 
@@ -181,7 +171,7 @@ TEST_CASE("Deletions") {
 
 // Testcase 5: 100 inserts, remove 10, checkinorder size 90
 
-TEST_CASE("100 inserts") {
+TEST_CASE("Test5: 100 inserts") {
 	Node* n = nullptr;
 	bool success = false;
 

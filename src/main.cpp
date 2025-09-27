@@ -130,7 +130,9 @@ int main(){
                 }
 
                 else {
-                    printIDByComma(ids);
+                    for (int i = 0; i < (int)ids.size(); i++) {
+                        cout << ids[i] << "\n";
+                    }
                 }
 
             }

@@ -378,16 +378,3 @@ void printNamesByComma(const vector<string>& names) {
     cout << "\n";
 }
 
-// exact same thing as previous function but for IDS
-void printIDByComma(const vector<int>& ids) {
-    for (int i = 0; i < (int) ids.size(); i++) { // change size_t size() to int
-        cout << ids[i];
-
-        if (i + 1 >= (int) ids.size()) { //change size_t to int for ids.size()
-            break;
-        }
-        cout << ", ";
-    }
-
-    cout << "\n";
-}

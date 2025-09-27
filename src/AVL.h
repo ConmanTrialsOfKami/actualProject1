@@ -50,5 +50,4 @@ bool extractQuote(const string& line, string& out);
 
 void printNamesByComma(const vector<string>& names);
 
-void printIDByComma(const vector<int>& ids);
 #endif //AVL_H

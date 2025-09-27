@@ -131,7 +131,7 @@ int main(){
 
                 else {
                     for (int i = 0; i < (int)ids.size(); i++) {
-                        cout << ids[i] << "\n";
+                        cout << ids[i] << "\n"; //for loop to print ids
                     }
                 }
 

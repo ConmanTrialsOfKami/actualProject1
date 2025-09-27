@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
-#include "AVl.h"
+#include "AVL.h"
 using namespace std;
 
 int main(){
